@@ -52,15 +52,11 @@
       }
 
       .bootstrap-datetimepicker-widget {
-      	z-index: 10000000000000000;
+      	z-index: 2147483647;
       }
 
       .row{
       	width: 100%;
-      }
-
-      #capacity {
-      	z-index: 0
       }
 
       #type-selector {

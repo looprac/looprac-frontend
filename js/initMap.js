@@ -87,16 +87,17 @@ function renderLocationSearchBox() {
         map.fitBounds(bounds);
 	};
 
-    originSearchBox.addListener('places_changed', function() {
+    originSearchBox.addListener('change', function() {
     	updateSearch(originSearchBox);
     });
-    destinationSearchBox.addListener('places_changed', function() {
+    destinationSearchBox.addListener('change', function() {
     	updateSearch(destinationSearchBox);
     });
 }
 
 function initMap() {
-// Create a map object and specify the DOM element for display.
+// Create a map object and specify the DOM element for display.   
+
 	map = new google.maps.Map(document.getElementById('map'), {
 		mapTypeControl: false,
 		zoomControl: false,
@@ -106,5 +107,24 @@ function initMap() {
 		zoom: 8
 	});
 
+ 	if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            map.setCenter({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            });
+        }, function(e) {
+            console.log(map.getCenter())
+            console.log(e)
+        });
+    } else {
+          // Browser doesn't support Geolocation
+        console.log("don't support current position")
+    }
+
 	renderLocationSearchBox();
+
+	setTimeout(function () {       
+            google.maps.event.trigger(map, 'resize');
+	}, 100);
 }
