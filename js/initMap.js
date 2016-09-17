@@ -7,10 +7,17 @@ function renderLocationSearchBox() {
 	var destination = document.getElementById("destination");
 	var destinationSearchBox = new google.maps.places.SearchBox(destination);
 
+	var capacityList = $("#capacity")
+	for(var i = 1; i <= 10; ++i) {
+		capacityList.append('<option value="' + i + '">' + i + '</option>')
+	}
+
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("startTime"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("endTime"));
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("capacity"));
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("search"));
 
  //   $('#startTime').datetimepicker();
 
@@ -74,18 +81,8 @@ function renderLocationSearchBox() {
     });
 }
 
-function renderDriverForm() {
-	$(".passernger").detach();
-	$("#searchForm").append('<select class="driver" id="capacity"></select>')
-	var capacityList = $("#capacity")
-	for(var i = 1; i <= 10; ++i) {
-		capacityList.append('<option value="' + i + '">' + i + '</option>')
-	}
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("capacity"));
-}
-
-function renderPassengerForm() {
-	$(".passernger").detach();
+function toggleStatus() {
+	$(".driver").toggle();
 }
 
 function initMap() {
@@ -100,6 +97,4 @@ function initMap() {
 	});
 
 	renderLocationSearchBox();
-	renderDriverForm();
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("search"));
 }

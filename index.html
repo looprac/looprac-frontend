@@ -14,19 +14,20 @@
 		<form id="searchForm">
 			<input id="origin" class="controls SearchBox" type="text" placeholder="Depart position">
 			<input id="destination" class="controls SearchBox" type="text" placeholder="Arrive position">
-			<div class='input-group date' id='startTime'>
-                <input type='text' class="form-control SearchBox" placeholder="Depart after" />
+			<div class='input-group date timepickerContainer' id='startTime'>
+                <input type='text' class="form-control" placeholder="Depart after" />
                	<span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                	</span>
            	</div>
-			<div class='input-group date' id='endTime'>
-                <input type='text' class="form-control SearchBox" placeholder="Arrive before" />
+			<div class='input-group date timepickerContainer' id='endTime'>
+                <input type='text' class="form-control" placeholder="Arrive before" />
                	<span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                	</span>
            	</div>
-			<button id="search">Search</button>
+           	<select class="driver" id="capacity"></select>
+			<button id="search"> Search </button>
 		</form>
 		<div id="map"></div>
     <div id="querylist" class="hide">

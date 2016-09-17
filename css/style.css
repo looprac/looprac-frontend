@@ -23,6 +23,7 @@
         font-size: 15px;
         font-weight: 300;
         margin-left: 12px;
+        margin-top: 12px;
         padding: 0 11px 0 13px;
         text-overflow: ellipsis;
         width: 300px;
@@ -34,6 +35,13 @@
 
       .pac-container {
         font-family: Roboto;
+      }
+
+      .timepickerContainer {
+        width: 300px;
+        margin-top: 10px;
+        margin-left: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
 
       #capacity {
