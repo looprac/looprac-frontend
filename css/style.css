@@ -50,3 +50,15 @@
       #target {
         width: 345px;
       }
+      #querylist {
+        top: 0px;
+        right: 0px;
+        width: 25%;
+        height: 100%;
+        position: absolute;
+        z-index: 2;
+        background-color: white;
+      }
+      #querylist h1 {
+        font-family: Arial, Helvetica;
+      }
