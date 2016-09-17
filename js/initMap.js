@@ -1,10 +1,5 @@
 var map;
 
-
-	$(function () {
-    	$('#startTime').datetimepicker();
-	});
-
 function renderLocationSearchBox() {
 	var origin = document.getElementById("origin");
 	var originSearchBox = new google.maps.places.SearchBox(origin);
@@ -16,7 +11,8 @@ function renderLocationSearchBox() {
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("startTime"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("endTime"));
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("search"));
+
+ //   $('#startTime').datetimepicker();
 
 	originSearchBox.markers = [];
 	destinationSearchBox.markers = [];
@@ -78,6 +74,18 @@ function renderLocationSearchBox() {
     });
 }
 
+function renderDriverForm() {
+	$(".passernger").detach();
+	$("#searchForm").append('<select class="driver" id="capacity"></select>')
+	var capacityList = $("#capacity")
+	for(var i = 1; i <= 10; ++i) {
+		capacityList.append('<option value="' + i + '">' + i + '</option>')
+	}
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("capacity"));
+}
+
+function renderPassengerForm()
+
 function initMap() {
 // Create a map object and specify the DOM element for display.
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -90,5 +98,6 @@ function initMap() {
 	});
 
 	renderLocationSearchBox();
-//	renderDriverForm();
+	renderDriverForm();
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("search"));
 }
