@@ -1,14 +1,6 @@
-function initMap() {
-// Create a map object and specify the DOM element for display.
-	var map = new google.maps.Map(document.getElementById('map'), {
-		mapTypeControl: false,
-		zoomControl: false,
-		streetViewControl: false,
-		center: {lat: -34.397, lng: 150.644},
-		scrollwheel: true,
-		zoom: 8
-	});
+var map;
 
+function renderLocationSearchBox() {
 	var origin = document.getElementById("origin");
 	var originSearchBox = new google.maps.places.SearchBox(origin);
 
@@ -18,17 +10,21 @@ function initMap() {
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
 
-    var updateSearch = function(markers, searchBox) {
+	originSearchBox.markers = [];
+	destinationSearchBox.markers = [];
+
+    var updateSearch = function(searchBox) {
     	var places = searchBox.getPlaces();
 
 		if (places.length == 0) {
 			return;
 		}
 
-		markers.forEach(function(marker) {
+		searchBox.markers.forEach(function(marker) {
 			marker.setMap(null);
 		});
-		markers = [];
+
+		searchBox.markers = [];
 
 		var bounds = new google.maps.LatLngBounds();
 
@@ -50,7 +46,7 @@ function initMap() {
 				scaledSize: new google.maps.Size(25, 25)
 			};
 
-			markers.push(new google.maps.Marker({
+			searchBox.markers.push(new google.maps.Marker({
 				map: map,
 				icon: icon,
 				title: place.name,
@@ -66,11 +62,33 @@ function initMap() {
         map.fitBounds(bounds);
 	};
 
-    var originMarkers = [], destinationMarkers = [];
     originSearchBox.addListener('places_changed', function() {
-    	updateSearch(originMarkers, this);
+    	updateSearch(originSearchBox);
     });
     destinationSearchBox.addListener('places_changed', function() {
-    	updateSearch(destinationMarkers, this);
+    	updateSearch(destinationSearchBox);
     });
+}
+
+function renderDriverForm() {
+	var timePicker = document.createElement("input");
+	timePicker.type = "time";
+	timePicker.id = "timepicker";
+	timePicker.class = "controls";
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(timePicker);
+}
+
+function initMap() {
+// Create a map object and specify the DOM element for display.
+	map = new google.maps.Map(document.getElementById('map'), {
+		mapTypeControl: false,
+		zoomControl: false,
+		streetViewControl: false,
+		center: {lat: -34.397, lng: 150.644},
+		scrollwheel: true,
+		zoom: 8
+	});
+
+	renderLocationSearchBox();
+	renderDriverForm();
 }

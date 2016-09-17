@@ -5,20 +5,28 @@
 		on this page. Replace it with your own styles as described in the
 		documentation:
 		https://developers.google.com/maps/documentation/javascript/tutorial -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-3.1.0.min.js"></script>
+=======
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+>>>>>>> master
 	</head>
 	<body>
 		<form id="passenger">
-			<input id="origin" class="controls" type="text" placeholder="Depart position">
-			<input id="destination" class="controls" type="text" placeholder="Arrive position">
-			<input id="" type="" name="">
+			<input id="origin" class="controls SearchBox" type="text" placeholder="Depart position">
+			<input id="destination" class="controls SearchBox" type="text" placeholder="Arrive position">
+			<button id="search">Search</button>
 		</form>
 		<div id="map"></div>
     <div id="querylist">
       <h1 id="title">Query Result</h1>
     </div>
 		<script src="js/initMap.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ&libraries=places&callback=initMap"
 			async defer></script>
 	</body>
