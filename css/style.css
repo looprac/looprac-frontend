@@ -62,3 +62,6 @@
       #querylist h1 {
         font-family: Arial, Helvetica;
       }
+      .hide {
+        display: none;
+      }
