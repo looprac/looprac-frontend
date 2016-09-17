@@ -7,19 +7,22 @@ function renderLocationSearchBox() {
 	var destination = document.getElementById("destination");
 	var destinationSearchBox = new google.maps.places.SearchBox(destination);
 
-	var capacityList = $("#capacity")
+	var capacityList = $("#capacityList")
 	for(var i = 1; i <= 10; ++i) {
 		capacityList.append('<option value="' + i + '">' + i + '</option>')
 	}
 
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById("userType"));
+
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("startTime"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("endTime"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("capacity"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("search"));
 
- //   $('#startTime').datetimepicker();
+    $('#startTime').datetimepicker();
+    $('#endTime').datetimepicker();
 
 	originSearchBox.markers = [];
 	destinationSearchBox.markers = [];

@@ -7,26 +7,31 @@
 		https://developers.google.com/maps/documentation/javascript/tutorial -->
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-3.1.0.min.js"></script>
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 	</head>
 	<body>
 		<form id="searchForm">
 			<input id="origin" class="controls SearchBox" type="text" placeholder="Depart position">
 			<input id="destination" class="controls SearchBox" type="text" placeholder="Arrive position">
-			<div class='input-group date timepickerContainer' id='startTime'>
+			<input id="userType" class="SearchBox" type="checkbox" checked data-toggle="toggle" data-on="Driver" data-off="Passenger" data-on-sstyle="success" data-offstyle="info">
+			<div class='input-group date searchBoxContainer' id='startTime'>
                 <input type='text' class="form-control" placeholder="Depart after" />
                	<span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                	</span>
            	</div>
-			<div class='input-group date timepickerContainer' id='endTime'>
+			<div class='input-group date searchBoxContainer' id='endTime'>
                 <input type='text' class="form-control" placeholder="Arrive before" />
                	<span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                	</span>
            	</div>
-           	<select class="driver" id="capacity"></select>
+           	<div class="form-group driver searchBoxContainer" id="capacity">
+  				<select class="form-control" id="capacityList">
+  					<option selected="" disabled="">Available seats:</option>
+  				</select>
+			</div>
 			<button id="search"> Search </button>
 		</form>
 		<div id="map"></div>
@@ -35,7 +40,8 @@
     </div>
     <script src="js/initMap.js"></script>
     <script src="js/querylist.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ&libraries=places&callback=initMap"
-			async defer></script>
+  	<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+  	<script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ&libraries=places&callback=initMap" async defer></script>
 	</body>
 </html>
