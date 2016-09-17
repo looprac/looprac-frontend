@@ -58,7 +58,10 @@
       .row{
       	width: 100%;
       }
+      .row2 {
+          height: 100%;
 
+      }
       #type-selector {
         color: #fff;
         background-color: #4d90fe;
@@ -73,19 +76,10 @@
       #target {
         width: 345px;
       }
-      #querylist {
-        top: 0px;
-        right: 0px;
-        width: 25%;
-        height: 100%;
-        position: absolute;
-        z-index: 2;
-        background-color: white;
-      }
       #title {
         position: absolute;
         width: 100%;
-        height: 15%;
+        height: 10%;
         top: 0px;
         background-color: #2196F3;
       }
@@ -104,3 +98,23 @@
       .hide {
         display: none;
       }
+      .vertical {
+        top: 0px;
+        right: 0px;
+        height: 100%;
+        width: 30%;
+        position: absolute;
+        z-index: 2;
+        background-color: white;
+        overflow: scroll;
+      }
+      .horizontal {
+        bottom: 0px;
+        right: 0px;
+        width: 100%;
+        height: 30%;
+        position: absolute;
+        z-index: 2;
+        background-color: white;
+        overflow: scroll;
+}

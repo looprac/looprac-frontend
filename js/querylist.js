@@ -43,16 +43,13 @@ function listener() {
 $(document).ready(function() {
   setInterval(function(){
     var w = window.innerWidth;
-    if (w < 768) {
-      $('#querylist').css("bottom", "0px");
-      $('#querylist').css("width", "100%");
-      $('#querylist').css("height", "20%")
-      $('#querylist').css("overflow", "scroll");
+    if (w < 1000) {
+      $('#querylist').removeClass("vertical");
+      $('#querylist').addClass("horizontal");
     }
     else {
-      $('#querylist').css("right", "0px");
-      $('#querylist').css("height", "100%");
-      $('#querylist').css("width", "20%");
+      $('#querylist').removeClass("horizontal");
+      $('#querylist').addClass("vertical");
     }
   });
 });
