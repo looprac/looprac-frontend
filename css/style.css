@@ -54,6 +54,10 @@
       	z-index: 10000000000000000;
       }
 
+      #timeInput {
+      	width:600px;
+      }
+
       #capacity {
       	z-index: 0
       }

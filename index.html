@@ -15,34 +15,33 @@
 			<input id="origin" class="controls SearchBox" type="text" placeholder="Depart position">
 			<input id="destination" class="controls SearchBox" type="text" placeholder="Arrive position">
 			<button class="btn btn-default defaultSizeContainer" id="search"> Search </button>
-			<div class="btn-group defaultSizeContainer" role="group" id="userType">
-  				<button type="button" class="btn btn-default" id="passengerType" onclick="passengerMod">Passenger</button>
-  				<button type="button" class="btn btn-default" id="driverType" onclick="driverMod">Driver</button>
+			<div class="input-group" id="userSelect">
+				<div class="input-group-btn" role="group" id="userType">
+					<div class="defaultSizeContainer" style="width: 153px">
+	  					<button type="button" class="btn btn-default" id="passengerType">Passenger</button>
+  						<button type="button" class="btn btn-default" id="driverType"">Driver</button>
+  					</div>
+				</div>
+           		<div class="input-group driver searchBoxContainer" id="capacity">
+	  				<select class="form-control" id="capacityList">
+  						<option selected="" disabled="">Available seats:</option>
+  					</select>
+				</div>
 			</div>
-			<div class='input-group date searchBoxContainer' id='startTime'>
-                <input type='text' class="form-control" placeholder="Depart after" />
+			<div class="input-group defaultSizeContainer" id='timeInput'>
+                <input type='text' class="form-control" placeholder="Depart after" id='startTime'/>
                	<span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
+	                <span class="glyphicon glyphicon-calendar"></span>
+               	</span>
+	            <input type='text' class="form-control" placeholder="Arrive before" />
+               	<span class="input-group-addon">
+	                <span class="glyphicon glyphicon-calendar"></span>
                	</span>
            	</div>
-			<div class='input-group date searchBoxContainer' id='endTime'>
-                <input type='text' class="form-control" placeholder="Arrive before" />
-               	<span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-               	</span>
-           	</div>
-           	<div class="form-group driver searchBoxContainer" id="capacity">
-  				<select class="form-control" id="capacityList">
-  					<option selected="" disabled="">Available seats:</option>
-  				</select>
-			</div>
 		</form>
 		<div id="map"></div>
     <div id="querylist" class="hide">
-      <div id="title">
-        <h1>Query Result</h1>
-      </div>
-      <div id="loading"></div>
+      <h1 id="title">Query Result</h1>
     </div>
     <script src="js/initMap.js"></script>
     <script src="js/querylist.js"></script>

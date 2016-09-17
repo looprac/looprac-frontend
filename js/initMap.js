@@ -15,24 +15,25 @@ function renderLocationSearchBox() {
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById("search"));
 
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("userType"));
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("startTime"));
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("endTime"));
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("capacity"));
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("timeInput"));
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("userSelect"));
 
     $('#startTime').datetimepicker();
     $('#endTime').datetimepicker();
 
-	$(".passengerTyoe").toggleClass('active');
+	$(".driver").hide();
+	$('#passengerType').addClass("active");
 
 	$('#passengerType').on("click", function() {
 		$('#passengerType').addClass("active");
 		$('#driverType').removeClass("active");
+		$('#search').html('Search')
 		$(".driver").hide();
 	});
 	$('#driverType').on("click", function() {
 		$('#driverType').addClass("active");
 		$('#passengerType').removeClass("active");
+		$('#search').html('Offer a Ride')
 		$(".driver").show();
 	});
 
