@@ -87,6 +87,13 @@
         text-align: center;
         color: white;
       }
+      #loading {
+        bottom: 0px;
+        width: 100%;
+        position: absolute;
+        height: 85%;
+        background: url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center    
+      }
       .hide {
         display: none;
       }
