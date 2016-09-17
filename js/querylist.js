@@ -5,11 +5,11 @@ $('#search').on("click", function() {
   var context = $('#search').innerText;
   var des = document.getElementById('destination').value;
   var origin = document.getElementById('origin').value;
-  var des = des.replace(/\s+/g, '');
-  var origin = origin.replace(/\s+/g, '');
+  var des = encodeURIComponent(des.trim());
+  var origin = encodeURIComponent(origin.trim());
   httpGetAsync('https://maps.googleapis.com/maps/api/geocode/json?address=' + origin + '&key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ', 
                function(e) {
-                 var re = JSON.parse(e); 
+                 var re = JSON.parse(e);
                  ori_lo = re["results"][0]["geometry"]["location"]["lng"];
                  ori_lat = re["results"][0]["geometry"]["location"]["lat"]; 
                });
@@ -19,6 +19,7 @@ $('#search').on("click", function() {
                  des_lo = re["results"][0]["geometry"]["location"]["lng"];
                  des_lat = re["results"][0]["geometry"]["location"]["lat"];
                });
+});
 
 window.setTimeout(detector, 1000);
 function detector() {
@@ -38,6 +39,25 @@ function listener() {
     $('#querylist').fadeIn("fast");
   }
 }
+
+$(document).ready(function() {
+  setInterval(function(){
+    var w = window.innerWidth;
+    if (w < 768) {
+      $('#querylist').css("bottom", "0px");
+      $('#querylist').css("width", "100%");
+      $('#querylist').css("height", "20%")
+      $('#querylist').css("overflow", "scroll");
+    }
+    else {
+      $('#querylist').css("right", "0px");
+      $('#querylist').css("height", "100%");
+      $('#querylist').css("width", "20%");
+    }
+  });
+});
+
+
 function httpGetAsync(theUrl, callback)
 {
   var xmlHttp = new XMLHttpRequest();
