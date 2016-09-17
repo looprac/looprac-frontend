@@ -1,5 +1,10 @@
 var map;
 
+
+	$(function () {
+    	$('#startTime').datetimepicker();
+	});
+
 function renderLocationSearchBox() {
 	var origin = document.getElementById("origin");
 	var originSearchBox = new google.maps.places.SearchBox(origin);
@@ -9,6 +14,9 @@ function renderLocationSearchBox() {
 
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("startTime"));
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("endTime"));
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("search"));
 
 	originSearchBox.markers = [];
 	destinationSearchBox.markers = [];
@@ -70,14 +78,6 @@ function renderLocationSearchBox() {
     });
 }
 
-function renderDriverForm() {
-	var timePicker = document.createElement("input");
-	timePicker.type = "time";
-	timePicker.id = "timepicker";
-	timePicker.class = "controls";
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(timePicker);
-}
-
 function initMap() {
 // Create a map object and specify the DOM element for display.
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -90,5 +90,5 @@ function initMap() {
 	});
 
 	renderLocationSearchBox();
-	renderDriverForm();
+//	renderDriverForm();
 }
