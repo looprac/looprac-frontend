@@ -1,4 +1,3 @@
-STYLED MAPS SATELLITE DIRECTIONS MARKERS
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,22 +5,17 @@ STYLED MAPS SATELLITE DIRECTIONS MARKERS
 		on this page. Replace it with your own styles as described in the
 		documentation:
 		https://developers.google.com/maps/documentation/javascript/tutorial -->
-		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
+		<form id="passenger">
+			<input id="origin" class="controls" type="text" placeholder="Depart position">
+			<input id="destination" class="controls" type="text" placeholder="Arrive position">
+			<input id="" type="" name="">
+		</form>
 		<div id="map"></div>
-		<script>
-			function initMap() {
-			// Create a map object and specify the DOM element for display.
-			var map = new google.maps.Map(document.getElementById('map'), {
-			center: {lat: -34.397, lng: 150.644},
-			scrollwheel: false,
-			zoom: 8
-			});
-			}
-
-		</script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ&callback=initMap"
+		<script src="js/initMap.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ&libraries=places&callback=initMap"
 			async defer></script>
 	</body>
 </html>
