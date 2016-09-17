@@ -1,11 +1,11 @@
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
+      #map { 
+  height: 100%; 
+  width: 100%; 
+  position:absolute; 
+  top: 0; 
+  left: 0; 
+  z-index: -100; /* Set z-index to 0 as it will be on a layer below the contact form */
+}
 
       .controls {
         margin-top: 10px;

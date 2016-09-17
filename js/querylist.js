@@ -2,6 +2,7 @@ var ori_lo, ori_lat, des_lo, des_lat
 
 
 $('#search').on("click", function() {
+	loginInterface("You need to login to try further functionality. If you don't have an account yet, please <a>sign up</a> at first.")
   var context = $('#search').innerText;
   var des = document.getElementById('destination').value;
   var origin = document.getElementById('origin').value;
@@ -19,7 +20,7 @@ $('#search').on("click", function() {
                  des_lo = re["results"][0]["geometry"]["location"]["lng"];
                  des_lat = re["results"][0]["geometry"]["location"]["lat"];
                });
-
+});
 window.setTimeout(detector, 1000);
 function detector() {
   if (typeof ori_lo === 'undefined' || typeof des_lo === 'undefined') {

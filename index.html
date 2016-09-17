@@ -12,6 +12,8 @@
   	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
 	</head>
 	<body>
+		<div id="map"></div>
+		<div class="content">
 		<form id="searchForm">
       <div class='row col-sm-12' id='locationInput'>
         <div class="col-sm-3">
@@ -55,20 +57,72 @@
         </div>
         <div class="row col-sm-12">
           <div class="col-sm-1">
-            <button class="btn btn-default defaultSizeContainer" id="search"> Search </button>
+            <button type="button" class="btn btn-default defaultSizeContainer" data-toggle="modal" data-target="#loginInterface" id="search"> Search </button>
           </div>
         </div>
       </div>
     </form>
-    <div id="map"></div>
+    </div>
     <div id="querylist" class="hide">
       <h1 id="title">Query Result</h1>
       <div id="loading"></div>
     </div>
+
+    <!--login popup-->
+		<div id="loginInterface" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+    		<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		<h4 class="modal-title">Login</h4>
+      		</div>
+      		<div class="modal-body">
+        		<p id="loginMessage"></p>
+        		<div class="alert alert-danger hide" role="alert" id="loginWarning"></div>
+        		<div class="form-horizontal">
+        			<div class="form-group" id="userEmail">
+        				<div class="col-sm-2"></div>
+        				<label class="control-label col-sm-2">Email</label>
+	        				<div class="col-sm-6">
+  								<input type="email" class="form-control" placeholder="User's Email" >
+  							</div>
+  							<div class="col-sm-2"></div>
+  						</div>
+        			<div class="form-group" id="userPassword">
+	        			<div class="col-sm-2"></div>
+        				<label class="control-label col-sm-2">Password</label>
+        				<div class="col-sm-6">
+	  							<input type="password" class="form-control" placeholder="User's Passowrd">
+  							</div>
+  							<div class="col-sm-2"></div>
+  						</div>
+  						<div class="form-group">
+    						<div class="col-sm-offset-2 col-sm-10">
+      						<div class="checkbox">
+        						<label>
+          						<input type="checkbox"> Remember me
+        						</label>
+      						</div>
+    						</div>
+  						</div>
+  					</div>
+      		</div>
+      		<div class="modal-footer">
+      			<div class="btn-group">
+        			<button type="button" class="btn btn-default" id="loginSubmit">Submit</button>
+        			<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+        		</div>
+      		</div>
+    		</div>
+  		</div>
+		</div>
+
     <script src="js/initMap.js"></script>
     <script src="js/querylist.js"></script>
+    <script type="text/javascript" src="js/user.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0_-PA2JTjsuiRyFrg67h26CVRAGsZMG0&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>

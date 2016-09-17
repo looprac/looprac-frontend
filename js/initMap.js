@@ -107,21 +107,6 @@ function initMap() {
 		zoom: 8
 	});
 
- 	if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            map.setCenter({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            });
-        }, function(e) {
-            console.log(map.getCenter())
-            console.log(e)
-        });
-    } else {
-          // Browser doesn't support Geolocation
-        console.log("don't support current position")
-    }
-
 	renderLocationSearchBox();
 
 	setTimeout(function () {       
