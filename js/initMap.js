@@ -6,14 +6,12 @@ function renderLocationSearchBox() {
 	var destination = document.getElementById("destination");
 	var destinationSearchBox = new google.maps.places.SearchBox(destination);
 
-	var capacityList = $("#capacityList")
+	var capacityList = $("#capacity")
 	for(var i = 1; i <= 10; ++i) {
 		capacityList.append('<option value="' + i + '">' + i + '</option>')
 	}
 
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin);
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById("search"));
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("locationInput"));
 
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("timeInput"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("userSelect"));
@@ -27,13 +25,13 @@ function renderLocationSearchBox() {
 	$('#passengerType').on("click", function() {
 		$('#passengerType').addClass("active");
 		$('#driverType').removeClass("active");
-		$('#search').html('Search')
+		$('#search').text('Search')
 		$(".driver").hide();
 	});
 	$('#driverType').on("click", function() {
 		$('#driverType').addClass("active");
 		$('#passengerType').removeClass("active");
-		$('#search').html('Offer a Ride')
+		$('#search').text('Offer a Ride')
 		$(".driver").show();
 	});
 

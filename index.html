@@ -12,32 +12,52 @@
 	</head>
 	<body>
 		<form id="searchForm">
-			<input id="origin" class="controls SearchBox" type="text" placeholder="Depart position">
-			<input id="destination" class="controls SearchBox" type="text" placeholder="Arrive position">
-			<button class="btn btn-default defaultSizeContainer" id="search"> Search </button>
-			<div class="input-group" id="userSelect">
-				<div class="input-group-btn" role="group" id="userType">
-					<div class="defaultSizeContainer" style="width: 153px">
-	  					<button type="button" class="btn btn-default" id="passengerType">Passenger</button>
-  						<button type="button" class="btn btn-default" id="driverType"">Driver</button>
-  					</div>
+			<div class='row col-sm-12' id='locationInput'>
+				<div class="col-sm-3">
+					<input class="controls defaultSizeContainer form-control" type="text" placeholder="Depart position" id="origin">	
 				</div>
-           		<div class="input-group driver searchBoxContainer" id="capacity">
-	  				<select class="form-control" id="capacityList">
-  						<option selected="" disabled="">Available seats:</option>
-  					</select>
+				<div class="col-sm-3">
+					<input class="controls defaultSizeContainer form-control" type="text" placeholder="Arrive position" id="destination">
 				</div>
 			</div>
-			<div class="input-group defaultSizeContainer" id='timeInput'>
-                <input type='text' class="form-control" placeholder="Depart after" id='startTime'/>
-               	<span class="input-group-addon">
-	                <span class="glyphicon glyphicon-calendar"></span>
-               	</span>
-	            <input type='text' class="form-control" placeholder="Arrive before" />
-               	<span class="input-group-addon">
-	                <span class="glyphicon glyphicon-calendar"></span>
-               	</span>
+			<div class="row col-sm-12" id='timeInput'>
+				<div class="col-sm-3">
+					<div class="input-group date controls defaultSizeContainer" id="startTime">
+               			<input type='text' class="form-control" placeholder="Depart after"/>
+           				<span class="input-group-addon">
+			                <span class="glyphicon glyphicon-calendar"></span>
+           				</span>
+           			</div>
+           		</div>
+           		<div class="col-sm-3">
+               		<div class="input-group date controls defaultSizeContainer" id="endTime">
+		         		<input type='text' class="form-control" placeholder="Arrive before" />
+           				<span class="input-group-addon">
+			           	    <span class="glyphicon glyphicon-calendar"></span>
+           				</span>
+               		</div>
+               	</div>
            	</div>
+           	<div class="col-sm-12" id="userSelect">
+           		<div class="row">
+					<div class="col-sm-3">
+						<div class="btn-group defaultSizeContainer" role="group" id="userType">
+			  				<button type="button" class="btn btn-default" id="passengerType">Passenger</button>
+	  						<button type="button" class="btn btn-default" id="driverType"">Driver</button>
+						</div>
+					</div>
+					<div class="col-sm-3">
+				  		<select class="form-control driver defaultSizeContainer" id="capacity">
+  							<option selected="" disabled="">Available seats:</option>
+  						</select>
+					</div>
+				</div>
+           		<div class="row">
+					<div class="col-sm-1">
+						<button class="btn btn-default defaultSizeContainer" id="search"> Search </button>
+					</div>
+				</div>
+			</div>
 		</form>
 		<div id="map"></div>
     <div id="querylist" class="hide">
