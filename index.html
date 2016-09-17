@@ -14,7 +14,11 @@
 		<form id="searchForm">
 			<input id="origin" class="controls SearchBox" type="text" placeholder="Depart position">
 			<input id="destination" class="controls SearchBox" type="text" placeholder="Arrive position">
-			<input id="userType" class="SearchBox" type="checkbox" checked data-toggle="toggle" data-on="Driver" data-off="Passenger" data-on-sstyle="success" data-offstyle="info">
+			<button class="btn btn-default defaultSizeContainer" id="search"> Search </button>
+			<div class="btn-group defaultSizeContainer" role="group" id="userType">
+  				<button type="button" class="btn btn-default" id="passengerType" onclick="passengerMod">Passenger</button>
+  				<button type="button" class="btn btn-default" id="driverType" onclick="driverMod">Driver</button>
+			</div>
 			<div class='input-group date searchBoxContainer' id='startTime'>
                 <input type='text' class="form-control" placeholder="Depart after" />
                	<span class="input-group-addon">
@@ -32,7 +36,6 @@
   					<option selected="" disabled="">Available seats:</option>
   				</select>
 			</div>
-			<button id="search"> Search </button>
 		</form>
 		<div id="map"></div>
     <div id="querylist" class="hide">

@@ -1,5 +1,4 @@
 var map;
-
 function renderLocationSearchBox() {
 	var origin = document.getElementById("origin");
 	var originSearchBox = new google.maps.places.SearchBox(origin);
@@ -14,15 +13,28 @@ function renderLocationSearchBox() {
 
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination);
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById("userType"));
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById("search"));
 
+	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("userType"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("startTime"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("endTime"));
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("capacity"));
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("search"));
 
     $('#startTime').datetimepicker();
     $('#endTime').datetimepicker();
+
+	$(".passengerTyoe").toggleClass('active');
+
+	$('#passengerType').on("click", function() {
+		$('#passengerType').addClass("active");
+		$('#driverType').removeClass("active");
+		$(".driver").hide();
+	});
+	$('#driverType').on("click", function() {
+		$('#driverType').addClass("active");
+		$('#passengerType').removeClass("active");
+		$(".driver").show();
+	});
 
 	originSearchBox.markers = [];
 	destinationSearchBox.markers = [];
@@ -82,10 +94,6 @@ function renderLocationSearchBox() {
     destinationSearchBox.addListener('places_changed', function() {
     	updateSearch(destinationSearchBox);
     });
-}
-
-function toggleStatus() {
-	$(".driver").toggle();
 }
 
 function initMap() {
