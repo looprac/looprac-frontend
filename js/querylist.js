@@ -30,11 +30,17 @@ function detector() {
 }
 
 function listener() {
+  console.log("fire listener");
   var context = document.getElementById('search').innerText;
-  if (context == 'search') {
-    alert('destination info: ' + des_lat + " " + des_lo) 
+
+  if (context == 'Search') {
+    alert('destination info: ' + des_lat + " " + des_lo);
+    $('#querylist').removeClass('hide');
+    $('#querylist').fadeIn("fast");
   }
   else {
+    var seat = document.getElementById('capacity').seletedIndex;
+    console.log(seat);
     $('#querylist').removeClass('hide');
     $('#querylist').fadeIn("fast");
   }
