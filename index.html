@@ -5,9 +5,10 @@
 		on this page. Replace it with your own styles as described in the
 		documentation:
 		https://developers.google.com/maps/documentation/javascript/tutorial -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.1.0.min.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
 	</head>
 	<body>
 		<form id="searchForm">
@@ -28,9 +29,11 @@
 			<button id="search">Search</button>
 		</form>
 		<div id="map"></div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="js/initMap.js"></script>
+    <div id="querylist" class="hide">
+      <h1 id="title">Query Result</h1>
+    </div>
+    <script src="js/initMap.js"></script>
+    <script src="js/querylist.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ&libraries=places&callback=initMap"
 			async defer></script>
 	</body>

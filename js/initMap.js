@@ -84,7 +84,9 @@ function renderDriverForm() {
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("capacity"));
 }
 
-function renderPassengerForm()
+function renderPassengerForm() {
+	$(".passernger").detach();
+}
 
 function initMap() {
 // Create a map object and specify the DOM element for display.
