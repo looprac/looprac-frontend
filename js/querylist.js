@@ -1,6 +1,6 @@
 $('#search').on("click", function() {
   var des = document.getElementById('destination');
-  var origin = document.getElmentById('origin') 
+  var origin = document.getElementById('origin') 
   var posting = $.post(
     url,
     {
