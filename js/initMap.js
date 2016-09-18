@@ -1,4 +1,5 @@
 var map;
+var passenger = true;
 function renderLocationSearchBox() {
 	var origin = document.getElementById("origin");
 	var originSearchBox = new google.maps.places.SearchBox(origin);
@@ -11,12 +12,7 @@ function renderLocationSearchBox() {
 		capacityList.append('<option value="' + i + '">' + i + '</option>')
 	}
 
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("locationInput"));
-
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("timeInput"));
-	map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("userSelect"));
-
-    $('#startTime').datetimepicker();
+	  $('#startTime').datetimepicker();
     $('#endTime').datetimepicker();
 
 	$(".driver").hide();
@@ -27,12 +23,14 @@ function renderLocationSearchBox() {
 		$('#driverType').removeClass("active");
 		$('#search').text('Search')
 		$(".driver").hide();
+		passenger = true;
 	});
 	$('#driverType').on("click", function() {
 		$('#driverType').addClass("active");
 		$('#passengerType').removeClass("active");
 		$('#search').text('Offer a Ride')
 		$(".driver").show();
+		passenger = false;
 	});
 
 	originSearchBox.markers = [];
@@ -53,10 +51,10 @@ function renderLocationSearchBox() {
 
 		var bounds = new google.maps.LatLngBounds();
 
-        map.addListener('bounds_changed', function() {
-          originSearchBox.setBounds(map.getBounds());
-          destinationSearchBox.setBounds(map.getBounds());
-        });
+    map.addListener('bounds_changed', function() {
+      originSearchBox.setBounds(map.getBounds());
+      destinationSearchBox.setBounds(map.getBounds());
+    });
 
 		places.forEach(function(place) {
 			if (!place.geometry) {
@@ -87,10 +85,10 @@ function renderLocationSearchBox() {
         map.fitBounds(bounds);
 	};
 
-    originSearchBox.addListener('change', function() {
+    originSearchBox.addListener('places_changed', function() {
     	updateSearch(originSearchBox);
     });
-    destinationSearchBox.addListener('change', function() {
+    destinationSearchBox.addListener('places_changed', function() {
     	updateSearch(destinationSearchBox);
     });
 }
