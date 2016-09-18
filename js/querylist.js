@@ -1,7 +1,9 @@
-var ori_lo, ori_lat, des_lo, des_lat
+var ori_lo, ori_lat, des_lo, des_lat, click=false;
 
 
 $('#search').on("click", function() {
+  click = true;
+  console.log(click);
 	loginInterface("You need to login to try further functionality. If you don't have an account yet, please <a>sign up</a> at first.")
   var context = $('#search').innerText;
   var des = document.getElementById('destination').value;
@@ -22,12 +24,18 @@ $('#search').on("click", function() {
                });
 });
 
-window.setTimeout(detector, 1000);
+
+
+
+
 function detector() {
-  if (typeof ori_lo === 'undefined' || typeof des_lo === 'undefined') {
-    window.setTimeout(detector, 1000);
+  if (typeof ori_lo === 'undefined' || typeof des_lo === 'undefined' || click == false) {
+    return;
   }
-  else { listener(); }
+  else { 
+    listener();
+    click = false; 
+  }
 }
 
 function listener() {
@@ -35,6 +43,12 @@ function listener() {
   var context = document.getElementById('search').innerText;
   var start = document.getElementById('start_time').value;
   var end = document.getElementById('end_time').value;
+  var start_date = new Date(start);
+  var end_date = new Date(end);
+  start = new Date(start_date.toUTCString());
+  end = new Date(end_date.toUTCString());
+  start = start.getTime();
+  end = end.getTime();
   if (context == 'Search') {
     alert('destination info: ' + des_lat + " " + des_lo);
     $('#querylist').removeClass('hide');
@@ -42,8 +56,8 @@ function listener() {
     alert("Information need to be sent:\n" + 
           "origin: (" + ori_lat + ", " + ori_lo + ")\n" + 
           "destination: (" + des_lat + ", " + des_lo + ")\n" +
-          "start time: " + start + "\n" + 
-          "end time: " + end + "\n");
+          "start time: " + start.toString() + "\n" + 
+          "end time: " + end.toString() + "\n");
   }
   else {
     var seat = document.getElementById('capacity').value;
@@ -55,6 +69,7 @@ function listener() {
 
 $(document).ready(function() {
   setInterval(function(){
+    detector();
     var w = window.innerWidth;
     if (w < 1000) {
       $('#querylist').removeClass("vertical");
