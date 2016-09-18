@@ -26,7 +26,7 @@
       <div class="row col-sm-12" id='timeInput'>
         <div class="col-sm-3">
           <div class="input-group date controls defaultSizeContainer" id="startTime">
-            <input type='text' class="form-control" placeholder="Depart after"/>
+            <input type='text' class="form-control" placeholder="Depart after" id="start_time"/>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-sm-3">
           <div class="input-group date controls defaultSizeContainer" id="endTime">
-            <input type='text' class="form-control" placeholder="Arrive before" />
+            <input type='text' class="form-control" placeholder="Arrive before" id="end_time"/>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -71,29 +71,16 @@
     </form>
     <div id="querylist" class="hide vertical">
       <div id="title">
-      </div>
-      <ul>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-        <li><h1>LA!</h1></h1></li>
-      </ul>
+      </div> 
       <div id="loading"></div>
+      <div id="results">
+        <ul id="lists">
+        </ul>
       </div>
     </div>
 
-    <div id="footer" class="alert alert-success" role="alert" style="display: none"></div>
+   	<div class="alert alert-success footer" role="alert" style="display: none" id="footer-success"></div>
+   	<div class="alert alert-danger footer" role="alert" style="display: none" id="footer-error"></div>
 
     <!--popup template-->
 		<div id="popupInterface" class="modal fade" role="dialog">
@@ -146,7 +133,6 @@
     <script src="js/initMap.js"></script>
     <script src="js/querylist.js"></script>
     <script type="text/javascript" src="js/user.js"></script>
-    <script src="js/cookie.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

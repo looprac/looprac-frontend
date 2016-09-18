@@ -11,27 +11,20 @@ $('#logoutBtn').on('click', logoutInterface)
 
 $('#search').on('click', function() {
 	if(guest && !passenger) {
-		loginInterface("You need to login to try further functionality. If you don't have an account yet, please <a onClick='signupInterface'>sign up</a> at first.")
-	$('#popupInterface').modal('show')
-	}
+		loginInterface("You need to login to try further functionality. If you don't have an account yet, please sign up at first.")
+		$('#popupInterface').modal('show')
+	} else if (!guest && !passenger) {
+		postRide();
+		$('#popupInterface').modal('show')
+	} 
 })
-
-function checkLogin() {
-	if(guest) {
-		return false;
-	}
-	if(!checkCookie("auth_token")) {
-		setFooterMessage("Sorry, you need to login again");
-		logout();
-	}
-}
 
 function isEmpty(str) {
     return (str === undefined || !str || 0 === str.length || /^\s*$/.test(str));
 }
 
-function setFooterMessage(message) {
-	var footer = $('#footer')
+function setFooterMessage(message, type) {
+	var footer = $('#footer-' + type)
 	footer.fadeOut().html(message).fadeIn();
 	setTimeout(function() {
 		footer.fadeOut();
@@ -42,8 +35,10 @@ function inputValidation(name, message, checkFunction) {
 	var value = $(name).find(':input').val();
 	if(isEmpty(value) || (checkFunction !== undefined && checkFunction !== null && !checkFunction(value))) {
 		$(name).addClass('has-error');
-		$('#popupWarning').html(message).removeClass('hide')
-		$(name).find(':input').on('change', function() {
+		if(!isEmpty(message)) {
+			$('#popupWarning').html(message).removeClass('hide')
+		}
+		$(name).on('click', function() {
 			$(name).removeClass('has-error');
 			$('#popupWarning').addClass('hide');
 		})
@@ -71,6 +66,18 @@ function loginInterface(message) {
 		}
 
 		login($('#userEmail').find(':input').val(), $('#userPassword').find(':input').val())
+	})
+}
+
+function postRide() {
+	$('#popupTitle').html('Post a New Ride');
+	$('#popupMessage').html('Are you sure you want to create a new ride?');
+	$('#popupForm').addClass('hide');
+	$('#popupAction').html("Confirm");
+	$('#popupAction').off('click');
+	$('#popupAction').on('click', function() {
+		$('#popupInterface').modal('hide');
+		postRideRequest();
 	})
 }
 
@@ -135,9 +142,9 @@ function login(userEmail, password) {
 				$('.guestMod').addClass('hide');
 				$('.userMod').removeClass('hide');
 				userInfo = data.user;
-				setCookie("authtoken", "12", 15)
+				//setCookie("authtoken", "12", 15)
 				guest = false;
-				setFooterMessage("Welcome back <b>" + userEmail + "</b>.")
+				setFooterMessage("Welcome back <b>" + userEmail + "</b>.", "success")
 				break;
 			case 401:
  				var data = JSON.parse(response.responseText)
@@ -147,6 +154,42 @@ function login(userEmail, password) {
     		$('#popupWarning').text("Sorry, something get wrong, please try again later").removeClass('hide')
    	}
   })
+}
+
+function postRideRequest() {
+	alert(JSON.stringify({
+		des: desName,
+		des_lo: des_lo,
+		des_lat: des_lat,
+		ori: originName,
+		ori_lo: ori_lo,
+		ori_lat: ori_lat,
+	}));
+	if(isEmpty(desName)) {
+		setFooterMessage("You need to choose your <b>desitination</b>", "error");
+		return;
+	}
+	if(isEmpty(desName)) {
+		setFooterMessage("You need to choose your <b>origin</b>", "error");
+		return;
+	}
+	if(!inputValidation('#startTime', "")) { return; }
+	if(!inputValidation('#endTime',"")) {return}/*
+	$.ajax({
+		type: "post",
+		crossDomain: true,
+		data: {},
+		cache: false,
+		url: apiConst + "/",
+		dataType: "json",
+		error: function (xhr, status, error) {
+			$('#popupWarning').text(error).show()
+		},
+		success: function(data) {
+			$('#popupWarning').addClass('hide');
+			setFooterMessage("Congrat~ You just post a new ride.", "success");
+		}
+	})*/
 }
 
 function signup(userEmail, password) {
@@ -165,7 +208,7 @@ function signup(userEmail, password) {
     success: function (data) {
 			$("#popupWarning").addClass('hide');
 			loginInterface("Now you can login using your new account");
-			setFooterMessage("Successfully create account <b>" + userEmail + "</b>.")
+			setFooterMessage("Successfully create account <b>" + userEmail + "</b>.", "success")
     }
   }); 
 }
@@ -174,7 +217,7 @@ function logout() {
 	console.log("user active log out");
 	guest = true;
 	userInfo = {};
-	setFooterMessage("You have logged out Looprac");
+	setFooterMessage("You have logged out Looprac", "success");
 	$('.guestMod').removeClass('hide');
 	$('.userMod').addClass('hide');
 	guest = true;
