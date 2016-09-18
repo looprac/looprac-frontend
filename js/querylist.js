@@ -2,7 +2,6 @@ var ori_lo, ori_lat, des_lo, des_lat, click=false, result, result_recieve=false,
 var loc_ok = false;
 
 /*this is a hardcode result*/
-result = '[{"id":3,"origin_lat":43.4643,"origin_lng":-80.5204,"destin_lat":43.6532,"destin_lng":-79.3832,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":26654,"latitude":55.000000,"longitude":80.000000,"action":"D lsj1"}]},{"id":4,"origin_lat":60,"origin_lng":80,"destin_lat":35.5,"destin_lng":80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":24426,"latitude":35.500000,"longitude":80.000000,"action":"D lsj1"}]}]'
 
 
 $('#search').on("click", function() {
@@ -217,7 +216,7 @@ function searchTrip(callback) {
 			setFooterMessage("Sorry something wrong happened, please try again", "error");
 		},
 		success: function(data) {
-			callback(data);
+			console.log(data);
 		}
 	})
 }
