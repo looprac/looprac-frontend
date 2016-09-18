@@ -172,13 +172,7 @@ function searchTrip(callback) {
 	}
 	if(!inputValidation('#startTime', "")) { return; }
 	if(!inputValidation('#endTime',"")) {return; }
-	var seats = $('#capacity').val()
-	if(seats === undefined || seats === null || seats === 0) {
-		setFooterMessage("You need to tell us how many <b>available seats</b> is there.", "error");
-		setErrorInput('#capacity')
-		return;
-	}
-
+	
 	var params = $.param({
 		origin_lat: ori_lat.toFixed(4),
 		origin_lng: ori_lo.toFixed(4),
@@ -195,12 +189,7 @@ function searchTrip(callback) {
 		url: apiConst + "/search_trip?" + params,
 		dataType: "json",
 		error: function (xhr, status, error) {
-			if(xhr.status === 200) {
-				$('#popupWarning').addClass('hide');
-				setFooterMessage("Congrat~ You just post a new ride.", "success");
-			} else {
-				setFooterMessage("Sorry something wrong happened, please try again", "error");
-			}
+			setFooterMessage("Sorry something wrong happened, please try again", "error");
 		},
 		success: function(data) {
 			callback(data);
