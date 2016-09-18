@@ -1,4 +1,4 @@
-var ori_lo, ori_lat, des_lo, des_lat, click=false, result, result_recieve=false, start, end, desName, originName;
+var ori_lo, ori_lat, des_lo, des_lat, click=false, result, result_recieve=false, start, end, des, origin;
 
 /*this is a hardcode result*/
 result = '[{"id":3,"origin_lat":40,"origin_lng":-80,"destin_lat":35,"destin_lng":-80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":26654,"latitude":35.000000,"longitude":-80.000000,"action":"D lsj1"}]},{"id":4,"origin_lat":40,"origin_lng":-80,"destin_lat":35.5,"destin_lng":-80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":24426,"latitude":35.500000,"longitude":-80.000000,"action":"D lsj1"}]}]'
@@ -7,10 +7,10 @@ result = '[{"id":3,"origin_lat":40,"origin_lng":-80,"destin_lat":35,"destin_lng"
 $('#search').on("click", function() {
   click = true;
   console.log(click);
-  desName = document.getElementById('destination').value;
-  originName = document.getElementById('origin').value;
-  var des = encodeURIComponent(desName.trim());
-  var origin = encodeURIComponent(originName.trim());
+  des = document.getElementById('destination').value;
+  origin = document.getElementById('origin').value;
+  des = encodeURIComponent(des.trim());
+  origin = encodeURIComponent(origin.trim());
 
   start = document.getElementById('start_time').value;
   end = document.getElementById('end_time').value;

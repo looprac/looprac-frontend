@@ -31,6 +31,13 @@ function setFooterMessage(message, type) {
 	}, 5000);
 }
 
+function setErrorInput(name) {
+	$(name).on('click', function() {
+		$(name).removeClass('has-error');
+		$('#popupWarning').addClass('hide');
+	})
+	}
+
 function inputValidation(name, message, checkFunction) {
 	var value = $(name).find(':input').val();
 	if(isEmpty(value) || (checkFunction !== undefined && checkFunction !== null && !checkFunction(value))) {
@@ -38,10 +45,7 @@ function inputValidation(name, message, checkFunction) {
 		if(!isEmpty(message)) {
 			$('#popupWarning').html(message).removeClass('hide')
 		}
-		$(name).on('click', function() {
-			$(name).removeClass('has-error');
-			$('#popupWarning').addClass('hide');
-		})
+		setErrorInput(name);
 		return false;
 	}
 	return true;
@@ -157,39 +161,54 @@ function login(userEmail, password) {
 }
 
 function postRideRequest() {
-	alert(JSON.stringify({
-		des: desName,
-		des_lo: des_lo,
-		des_lat: des_lat,
-		ori: originName,
-		ori_lo: ori_lo,
-		ori_lat: ori_lat,
-	}));
-	if(isEmpty(desName)) {
+	if(isEmpty(des)) {
 		setFooterMessage("You need to choose your <b>desitination</b>", "error");
 		return;
 	}
-	if(isEmpty(desName)) {
+	if(isEmpty(origin)) {
 		setFooterMessage("You need to choose your <b>origin</b>", "error");
 		return;
 	}
 	if(!inputValidation('#startTime', "")) { return; }
-	if(!inputValidation('#endTime',"")) {return}/*
+	if(!inputValidation('#endTime',"")) {return; }
+	var seats = $('#capacity').val()
+	if(seats === undefined || seats === null || seats === 0) {
+		setFooterMessage("You need to tell us how many <b>available seats</b> is there.", "error");
+		setErrorInput('#capacity')
+		return;
+	}
+	//origin_name destin_name origin_lat origin_lng destin_lat destin_lng leave_after arrive_by seats email
+	var params = $.param({
+		origin_name: origin,
+		destin_name: des,
+		origin_lng: ori_lo,
+		origin_lat: ori_lat,
+		destin_lng: des_lo,
+		destin_lat: des_lat,
+		leave_after: start / 10000,
+		arrive_by: end / 1000,
+		seats: seats,
+		email: userInfo.email
+	})
 	$.ajax({
 		type: "post",
 		crossDomain: true,
-		data: {},
 		cache: false,
-		url: apiConst + "/",
+		url: apiConst + "/new_trip?" + params,
 		dataType: "json",
 		error: function (xhr, status, error) {
-			$('#popupWarning').text(error).show()
+			if(xhr.responseText === 200) {
+				$('#popupWarning').addClass('hide');
+				setFooterMessage("Congrat~ You just post a new ride.", "success");
+			} else {
+				setFooterMessage("Sorry something wrong happened, please try again", "error");
+			}
 		},
 		success: function(data) {
 			$('#popupWarning').addClass('hide');
 			setFooterMessage("Congrat~ You just post a new ride.", "success");
 		}
-	})*/
+	})
 }
 
 function signup(userEmail, password) {
