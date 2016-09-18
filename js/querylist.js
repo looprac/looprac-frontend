@@ -2,7 +2,7 @@ var ori_lo, ori_lat, des_lo, des_lat, click=false, result, result_recieve=false,
 
 
 /*this is a hardcode result*/
-result = '[{"id":3,"origin_lat":43.4643,"origin_lng":-80.5204,"destin_lat":43.6532,"destin_lng":-79.3832,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":26654,"latitude":55.000000,"longitude":80.000000,"action":"D lsj1"}]},{"id":4,"origin_lat":60,"origin_lng":80,"destin_lat":35.5,"destin_lng":80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":24426,"latitude":35.500000,"longitude":80.000000,"action":"D lsj1"}]}]'
+
 
 
 $('#search').on("click", function() {
@@ -73,7 +73,6 @@ function listener() {
           "end time: " + end.toString() + "\n");*/
     var seat = document.getElementById('capacity').value;
     console.log(seat);
-    result_parse(result);
 
   }
   else {
@@ -105,22 +104,41 @@ $(document).ready(function() {
 
 function result_parse(result) {
   $('#loading').addClass('hide');
+  console.log(result);
   result = JSON.parse(result);
   var len = result.length;
   var list = document.getElementById('lists');
-  var lat = result[0]["origin_lat"];
-  var lng = result[0]["origin_lng"];
-  var origin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-  lat = result[0]["destin_lat"];
-  lng = result[0]["destin_lng"];
-  var destin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-  var step = result[0]["steps"]
-  var lenth = step.length;
-  lat = result[0]["steps"][0]["latitude"];
-  lng = result[0]["steps"][0]["longitude"];
-  var pl1 = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-  display(origin, destin);
-  display(origin, pl1);
+  for (i = 0; i < len; i ++ ) {
+    var lat = result[i]["origin_lat"];
+    var lng = result[i]["origin_lng"];
+    var origin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    lat = result[i]["destin_lat"];
+    lng = result[i]["destin_lng"];
+    var destin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    var step = result[i]["steps"]
+    var lenth = step.length;
+    var tmploc;
+    for (j = 0; j < lenth; j ++) {
+      lat = result[i]["steps"][j]["latitude"];
+      lng = result[i]["steps"][j]["longitude"];
+      console.log("tmp" + (i*j).toString() + " is " + "(" + lat.toString() + "&&&" + lng.toString() + ")");
+      var tmp = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+      if(j == 0) {
+        display(origin, tmp);
+      }
+      else {
+        display(tmploc, tmp);
+      }
+      tmploc = tmp
+    }
+    display(tmploc, destin);
+    var pl1 = new google.maps.LatLng(parseFloat(43.4643), parseFloat(-80.5204));
+    var pl2 = new google.maps.LatLng(parseFloat(43.3452), parseFloat(-79.5324));
+    display(pl1, pl2);
+  }
+//  display(origin, pl1);
+//  display(pl1, pl2);
+//  display(pl1, des);
   var num = 1;
   list.innerHTML = list.innerHTML + 
     '<li><div><p>Route ' + num.toString() + '</p><button>Book</button></div></li>';
@@ -162,48 +180,49 @@ function httpGetAsync(theUrl, callback)
 }
 
 function searchTrip(callback) {
-	if(isEmpty(des)) {
-		setFooterMessage("You need to choose your <b>desitination</b>", "error");
-		return;
-	}
-	if(isEmpty(origin)) {
-		setFooterMessage("You need to choose your <b>origin</b>", "error");
-		return;
-	}
-	if(!inputValidation('#startTime', "")) { return; }
-	if(!inputValidation('#endTime',"")) {return; }
-	var seats = $('#capacity').val()
-	if(seats === undefined || seats === null || seats === 0) {
-		setFooterMessage("You need to tell us how many <b>available seats</b> is there.", "error");
-		setErrorInput('#capacity')
-		return;
-	}
+  if(isEmpty(des)) {
+    setFooterMessage("You need to choose your <b>desitination</b>", "error");
+    return;
+  }
+  if(isEmpty(origin)) {
+    setFooterMessage("You need to choose your <b>origin</b>", "error");
+    return;
+  }
+  if(!inputValidation('#startTime', "")) { return; }
+  if(!inputValidation('#endTime',"")) {return; }
+  var seats = $('#capacity').val()
+  if(seats === undefined || seats === null || seats === 0) {
+    setFooterMessage("You need to tell us how many <b>available seats</b> is there.", "error");
+    setErrorInput('#capacity')
+    return;
+  }
 
-	var params = $.param({
-		origin_lat: ori_lat.toFixed(4),
-		origin_lng: ori_lo.toFixed(4),
-		destin_lat: des_lat.toFixed(4),
-		destin_lng: des_lo.toFixed(4),
-		leave_after: start,
-		arrive_by: end
-	})
+  var params = $.param({
+    origin_lat: ori_lat.toFixed(4),
+    origin_lng: ori_lo.toFixed(4),
+    destin_lat: des_lat.toFixed(4),
+    destin_lng: des_lo.toFixed(4),
+    leave_after: start,
+    arrive_by: end
+  })
 
-	$.ajax({
-		type: "get",
-		crossDomain: true,
-		cache: false,
-		url: apiConst + "/search_trip?" + params,
-		dataType: "json",
-		error: function (xhr, status, error) {
-			if(xhr.status === 200) {
-				$('#popupWarning').addClass('hide');
-				setFooterMessage("Congrat~ You just post a new ride.", "success");
-			} else {
-				setFooterMessage("Sorry something wrong happened, please try again", "error");
-			}
-		},
-		success: function(data) {
-			callback(data);
-		}
-	})
+  $.ajax({
+    type: "get",
+    crossDomain: true,
+    cache: false,
+    url: apiConst + "/search_trip?" + params,
+    dataType: "json",
+    error: function (xhr, status, error) {
+      if(xhr.status === 200) {
+        $('#popupWarning').addClass('hide');
+        setFooterMessage("Congrat~ You just post a new ride.", "success");
+      } else {
+        setFooterMessage("Sorry something wrong happened, please try again", "error");
+      }
+    },
+    success: function(data) {
+
+      console.log(data);
+    }
+  })
 }
