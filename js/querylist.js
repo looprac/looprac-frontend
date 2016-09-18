@@ -3,8 +3,6 @@ var loc_ok = false;
 
 /*this is a hardcode result*/
 
-
-
 $('#search').on("click", function() {
   click = true;
   console.log(click);
@@ -106,8 +104,6 @@ $(document).ready(function() {
     }
   });
 });
-
-
 
 
 function result_parse(result) {
@@ -218,7 +214,7 @@ function searchTrip(callback) {
 			setFooterMessage("Sorry something wrong happened, please try again", "error");
 		},
 		success: function(data) {
-			callback(data);
+			console.log(data);
 		}
 	})
 }
