@@ -185,7 +185,7 @@ function postRideRequest() {
 		origin_lat: ori_lat.toFixed(4),
 		destin_lng: des_lo.toFixed(4),
 		destin_lat: des_lat.toFixed(4),
-		leave_after: start / 10000,
+		leave_after: start / 1000,
 		arrive_by: end / 1000,
 		seats: seats,
 		email: userInfo.email
