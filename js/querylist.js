@@ -1,7 +1,8 @@
 var ori_lo, ori_lat, des_lo, des_lat, click=false, result, result_recieve=false, start, end;
 
+
 /*this is a hardcode result*/
-result = '[{"id":3,"origin_lat":40,"origin_lng":-80,"destin_lat":35,"destin_lng":-80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":26654,"latitude":35.000000,"longitude":-80.000000,"action":"D lsj1"}]},{"id":4,"origin_lat":40,"origin_lng":-80,"destin_lat":35.5,"destin_lng":-80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":24426,"latitude":35.500000,"longitude":-80.000000,"action":"D lsj1"}]}]'
+result = '[{"id":3,"origin_lat":40,"origin_lng":-80,"destin_lat":35,"destin_lng":-80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":26654,"latitude":55.000000,"longitude":80.000000,"action":"D lsj1"}]},{"id":4,"origin_lat":60,"origin_lng":80,"destin_lat":35.5,"destin_lng":80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":24426,"latitude":35.500000,"longitude":80.000000,"action":"D lsj1"}]}]'
 
 
 $('#search').on("click", function() {
@@ -75,11 +76,11 @@ function listener() {
   if (context == 'Search') {
     $('#querylist').removeClass('hide');
     $('#querylist').fadeIn("fast");
-    alert("Information need to be sent:\n" + 
+    /*alert("Information need to be sent:\n" + 
           "origin: (" + ori_lat + ", " + ori_lo + ")\n" + 
           "destination: (" + des_lat + ", " + des_lo + ")\n" +
           "start time: " + start.toString() + "\n" + 
-          "end time: " + end.toString() + "\n");
+          "end time: " + end.toString() + "\n");*/
     var seat = document.getElementById('capacity').value;
     console.log(seat);
     result_parse(result);
@@ -113,18 +114,63 @@ $(document).ready(function() {
 
 
 function result_parse(result) {
-  console.log(result);
+  $('#loading').addClass('hide');
   result = JSON.parse(result);
   var len = result.length;
   var list = document.getElementById('lists');
   for ( i = 0; i < len; i ++ ) {
-    console.log(i);
+    var lat = result[i]["origin_lat"];
+    var lng = result[i]["origin_lng"];
+    var origin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    lat = result[i]["destin_lat"];
+    lng = result[i]["destin_lng"];
+    var destin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    var wayp = result[i]["steps"];
+    var waypts = [];
+    /*for (j = 0; j < wayp.length; j ++) {
+      var la = wayp[j]["latitude"];
+      var lo = wayp[j]["longitude"];
+      console.log(la);
+      console.log(lo);
+      var loc = la.toString() + "," + lo.toString();*/
+    waypts.push({
+        location: "Montreal, QBC",
+        stopover: true
+    });
+    display(origin, destin, waypts);
     list.innerHTML = list.innerHTML + 
-      '<li><div><button>' + i.toString() + 
-      '</button></div></li>';
+      '<li><div><p>Route ' + i.toString() + '</p><button>Book</button></div></li>';
+
   }
 }
- 
+
+
+function display(origin, destin, waypts) { 
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  directionsDisplay.setMap(map);
+  console.log(waypts);
+  var request = {
+    origin: 'Halifax, NS',
+    destination: 'Vancouver, BC',
+    waypoints: waypts,
+    optimizeWaypoints: true,
+    travelMode: 'DRIVING'
+  };
+  console.log("quest");
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(result);
+      console.log(result)
+    }
+    else {
+      console.log(result)
+      console.log("fail");
+    }
+  });
+}
+
+
 function httpGetAsync(theUrl, callback)
 {
   var xmlHttp = new XMLHttpRequest();
