@@ -33,14 +33,20 @@ function detector() {
 function listener() {
   console.log("fire listener");
   var context = document.getElementById('search').innerText;
-
+  var start = document.getElementById('start_time').value;
+  var end = document.getElementById('end_time').value;
   if (context == 'Search') {
     alert('destination info: ' + des_lat + " " + des_lo);
     $('#querylist').removeClass('hide');
     $('#querylist').fadeIn("fast");
+    alert("Information need to be sent:\n" + 
+          "origin: (" + ori_lat + ", " + ori_lo + ")\n" + 
+          "destination: (" + des_lat + ", " + des_lo + ")\n" +
+          "start time: " + start + "\n" + 
+          "end time: " + end + "\n");
   }
   else {
-    var seat = document.getElementById('capacity').seletedIndex;
+    var seat = document.getElementById('capacity').value;
     console.log(seat);
     $('#querylist').removeClass('hide');
     $('#querylist').fadeIn("fast");
