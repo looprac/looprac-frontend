@@ -34,21 +34,12 @@ $('#search').on("click", function() {
                  des_lo = re["results"][0]["geometry"]["location"]["lng"];
                  des_lat = re["results"][0]["geometry"]["location"]["lat"];
                });
-/*  $.post(url,
-         {
-           passenger_type: passenger,
-           origin_log: ori_lo,
-           origin_lat: ori_lat,
-           destin_log: des_lo,
-           destin_lat: des_lat,
-           start_time: start,
-           end_time: end,
 
-
-         },
-         function(e) {
-           result = e;
-         });*/
+	if(passenger) {
+		searchTrip(function(data) {
+			console.log(JSON.stringify(data));
+		});
+	}
 });
 
 
@@ -180,4 +171,51 @@ function httpGetAsync(theUrl, callback)
   xmlHttp.open("GET", theUrl, true); // true for asynchronous 
   xmlHttp.send(null);
 
+}
+
+function searchTrip(callback) {
+	if(isEmpty(des)) {
+		setFooterMessage("You need to choose your <b>desitination</b>", "error");
+		return;
+	}
+	if(isEmpty(origin)) {
+		setFooterMessage("You need to choose your <b>origin</b>", "error");
+		return;
+	}
+	if(!inputValidation('#startTime', "")) { return; }
+	if(!inputValidation('#endTime',"")) {return; }
+	var seats = $('#capacity').val()
+	if(seats === undefined || seats === null || seats === 0) {
+		setFooterMessage("You need to tell us how many <b>available seats</b> is there.", "error");
+		setErrorInput('#capacity')
+		return;
+	}
+
+	var params = $.param({
+		origin_lat: ori_lat.toFixed(4),
+		origin_lng: ori_lo.toFixed(4),
+		destin_lat: des_lat.toFixed(4),
+		destin_lng: des_lo.toFixed(4),
+		leave_after: start,
+		arrive_by: end
+	})
+
+	$.ajax({
+		type: "get",
+		crossDomain: true,
+		cache: false,
+		url: apiConst + "/search_trip?" + params,
+		dataType: "json",
+		error: function (xhr, status, error) {
+			if(xhr.status === 200) {
+				$('#popupWarning').addClass('hide');
+				setFooterMessage("Congrat~ You just post a new ride.", "success");
+			} else {
+				setFooterMessage("Sorry something wrong happened, please try again", "error");
+			}
+		},
+		success: function(data) {
+			callback(data);
+		}
+	})
 }
