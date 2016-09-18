@@ -181,10 +181,10 @@ function postRideRequest() {
 	var params = $.param({
 		origin_name: origin,
 		destin_name: des,
-		origin_lng: ori_lo,
-		origin_lat: ori_lat,
-		destin_lng: des_lo,
-		destin_lat: des_lat,
+		origin_lng: ori_lo.toFixed(4),
+		origin_lat: ori_lat.toFixed(4),
+		destin_lng: des_lo.toFixed(4),
+		destin_lat: des_lat.toFixed(4),
 		leave_after: start / 10000,
 		arrive_by: end / 1000,
 		seats: seats,
@@ -197,7 +197,7 @@ function postRideRequest() {
 		url: apiConst + "/new_trip?" + params,
 		dataType: "json",
 		error: function (xhr, status, error) {
-			if(xhr.responseText === 200) {
+			if(xhr.status === 200) {
 				$('#popupWarning').addClass('hide');
 				setFooterMessage("Congrat~ You just post a new ride.", "success");
 			} else {
