@@ -1,4 +1,6 @@
 var map;
+
+
 function renderLocationSearchBox() {
 	var origin = document.getElementById("origin");
 	var originSearchBox = new google.maps.places.SearchBox(origin);
