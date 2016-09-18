@@ -95,6 +95,12 @@
         height: 85%;
         background: url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center    
       }
+      #lists {
+        position: absolute;
+        top: 15%;
+        padding: 15px;
+        display: block;
+      }
       .hide {
         display: none;
       }
