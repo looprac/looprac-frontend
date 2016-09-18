@@ -2,7 +2,7 @@ var ori_lo, ori_lat, des_lo, des_lat, click=false, result, result_recieve=false,
 
 
 /*this is a hardcode result*/
-result = '[{"id":3,"origin_lat":40,"origin_lng":-80,"destin_lat":35,"destin_lng":-80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":26654,"latitude":55.000000,"longitude":80.000000,"action":"D lsj1"}]},{"id":4,"origin_lat":60,"origin_lng":80,"destin_lat":35.5,"destin_lng":80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":24426,"latitude":35.500000,"longitude":80.000000,"action":"D lsj1"}]}]'
+result = '[{"id":3,"origin_lat":43.4643,"origin_lng":-80.5204,"destin_lat":43.6532,"destin_lng":-79.3832,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":26654,"latitude":55.000000,"longitude":80.000000,"action":"D lsj1"}]},{"id":4,"origin_lat":60,"origin_lng":80,"destin_lat":35.5,"destin_lng":80,"leave_after":0,"arrive_by":1000000,"seats":4,"driver_uuid":"lsj1","steps":[{"time":0,"latitude":40.000000,"longitude":-80.000000,"action":"P lsj1"},{"time":24426,"latitude":35.500000,"longitude":80.000000,"action":"D lsj1"}]}]'
 
 
 $('#search').on("click", function() {
@@ -23,13 +23,13 @@ $('#search').on("click", function() {
   start = start.getTime();
   end = end.getTime();
 
-  httpGetAsync('https://maps.googleapis.com/maps/api/geocode/json?address=' + origin + '&key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ', 
+  httpGetAsync('https://maps.googleapis.com/maps/api/geocode/json?address=' + origin + '&key=AIzaSyB0_-PA2JTjsuiRyFrg67h26CVRAGsZMG0', 
                function(e) {
                  var re = JSON.parse(e);
                  ori_lo = re["results"][0]["geometry"]["location"]["lng"];
                  ori_lat = re["results"][0]["geometry"]["location"]["lat"]; 
                });
-  httpGetAsync('https://maps.googleapis.com/maps/api/geocode/json?address=' + des + '&key=AIzaSyBsLVrWMv6hvF24cX2ux4htbI1ngi9QyLQ',
+  httpGetAsync('https://maps.googleapis.com/maps/api/geocode/json?address=' + des + '&key=AIzaSyB0_-PA2JTjsuiRyFrg67h26CVRAGsZMG0',
                function(e) {
                  var re = JSON.parse(e);
                  des_lo = re["results"][0]["geometry"]["location"]["lng"];
@@ -118,46 +118,34 @@ function result_parse(result) {
   result = JSON.parse(result);
   var len = result.length;
   var list = document.getElementById('lists');
-  for ( i = 0; i < len; i ++ ) {
-    var lat = result[i]["origin_lat"];
-    var lng = result[i]["origin_lng"];
-    var origin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-    lat = result[i]["destin_lat"];
-    lng = result[i]["destin_lng"];
-    var destin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-    var wayp = result[i]["steps"];
-    var waypts = [];
-    /*for (j = 0; j < wayp.length; j ++) {
-      var la = wayp[j]["latitude"];
-      var lo = wayp[j]["longitude"];
-      console.log(la);
-      console.log(lo);
-      var loc = la.toString() + "," + lo.toString();*/
-    waypts.push({
-        location: "Montreal, QBC",
-        stopover: true
-    });
-    display(origin, destin, waypts);
-    list.innerHTML = list.innerHTML + 
-      '<li><div><p>Route ' + i.toString() + '</p><button>Book</button></div></li>';
-
-  }
+  var lat = result[0]["origin_lat"];
+  var lng = result[0]["origin_lng"];
+  var origin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+  lat = result[0]["destin_lat"];
+  lng = result[0]["destin_lng"];
+  var destin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+  var step = result[0]["steps"]
+  var lenth = step.length;
+  lat = result[0]["steps"][0]["latitude"];
+  lng = result[0]["steps"][0]["longitude"];
+  var pl1 = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+  display(origin, destin);
+  display(origin, pl1);
+  var num = 1;
+  list.innerHTML = list.innerHTML + 
+    '<li><div><p>Route ' + num.toString() + '</p><button>Book</button></div></li>';
 }
 
 
-function display(origin, destin, waypts) { 
+function display(origin, destin) { 
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
   directionsDisplay.setMap(map);
-  console.log(waypts);
   var request = {
-    origin: 'Halifax, NS',
-    destination: 'Vancouver, BC',
-    waypoints: waypts,
-    optimizeWaypoints: true,
+    origin: origin,
+    destination: destin,
     travelMode: 'DRIVING'
   };
-  console.log("quest");
   directionsService.route(request, function(result, status) {
     if (status == 'OK') {
       directionsDisplay.setDirections(result);
