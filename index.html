@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div id="userSelect" style="width: 100%; z-index: 0">
+      <div id="userSelect" style="width: 100%; z-index: -100">
         <div class="row col-sm-12">
           <div class="col-sm-3 col-xs-8">
             <div class="btn-group defaultSizeContainer" role="group" id="userType">
@@ -50,15 +50,22 @@
             </div>
           </div>
           <div class="col-sm-2 col-xs-4">
-            <select class="form-control driver defaultSizeContainer" id="capacity" style="width: 100%">
-              <option selected="" disabled=""> Seats: </option>
-            </select>
+          	<div class="defaultSizeContainer">
+            	<select class="form-control driver" id="capacity" style="width: 100%">
+              	<option selected="" disabled=""> Seats: </option>
+            	</select>
+            </div>
           </div>
         </div>
         <div class="row col-sm-12">
-          <div class="col-sm-1">
-            <button type="button" class="btn btn-default defaultSizeContainer" data-toggle="modal" data-target="#loginInterface" id="search"> Search </button>
-          </div>
+        	<div class="col-sm-12">
+           	<button type="button" class="btn btn-default defaultSizeContainer" id="search"> Search </button>
+         		<div class="btn-group defaultSizeContainer">
+         			<button type="button" class="btn btn-default guestMod" id="loginBtn" data-toggle="modal" data-target="#popupInterface">Login</button>
+         			<button type="button" class="btn btn-default guestMod" id="signupBtn" data-toggle="modal" data-target="#popupInterface">Sign up</button>
+         			<button type="button" class="btn btn-default userMod hide" id="logoutBtn" data-toggle="modal" data-target="#popupInterface">Log out</button>
+        	  </div>
+        	</div>
         </div>
       </div>
     </form>
@@ -72,20 +79,21 @@
       </div>
     </div>
 
-    </div>
+   	<div class="alert alert-success footer" role="alert" style="display: none" id="footer-success"></div>
+   	<div class="alert alert-danger footer" role="alert" style="display: none" id="footer-error"></div>
 
-    <!--login popup-->
-		<div id="loginInterface" class="modal fade" role="dialog">
+    <!--popup template-->
+		<div id="popupInterface" class="modal fade" role="dialog">
   		<div class="modal-dialog">
     		<div class="modal-content">
       		<div class="modal-header">
         		<button type="button" class="close" data-dismiss="modal">&times;</button>
-        		<h4 class="modal-title">Login</h4>
+        		<h4 class="modal-title" id="popupTitle"></h4>
       		</div>
       		<div class="modal-body">
-        		<p id="loginMessage"></p>
-        		<div class="alert alert-danger hide" role="alert" id="loginWarning"></div>
-        		<div class="form-horizontal">
+        		<p id="popupMessage"></p>
+        		<div class="alert alert-danger hide" role="alert" id="popupWarning"></div>
+        		<div class="form-horizontal hide" id="popupForm">
         			<div class="form-group" id="userEmail">
         				<div class="col-sm-2"></div>
         				<label class="control-label col-sm-2">Email</label>
@@ -102,20 +110,19 @@
   							</div>
   							<div class="col-sm-2"></div>
   						</div>
-  						<div class="form-group">
-    						<div class="col-sm-offset-2 col-sm-10">
-      						<div class="checkbox">
-        						<label>
-          						<input type="checkbox"> Remember me
-        						</label>
-      						</div>
-    						</div>
+        			<div class="form-group" id="userPassword2">
+	        			<div class="col-sm-2"></div>
+        				<label class="control-label col-sm-2">Confirm Password</label>
+        				<div class="col-sm-6">
+	  							<input type="password" class="form-control" placeholder="Type the same password again">
+  							</div>
+  							<div class="col-sm-2"></div>
   						</div>
   					</div>
       		</div>
       		<div class="modal-footer">
       			<div class="btn-group">
-        			<button type="button" class="btn btn-default" id="loginSubmit">Submit</button>
+        			<button type="button" class="btn btn-default" id="popupAction"></button>
         			<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
         		</div>
       		</div>
