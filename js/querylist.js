@@ -109,26 +109,43 @@ $(document).ready(function() {
 });
 
 
-
-
 function result_parse(result) {
   $('#loading').addClass('hide');
+  console.log(result);
   result = JSON.parse(result);
   var len = result.length;
   var list = document.getElementById('lists');
-  var lat = result[0]["origin_lat"];
-  var lng = result[0]["origin_lng"];
-  var origin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-  lat = result[0]["destin_lat"];
-  lng = result[0]["destin_lng"];
-  var destin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-  var step = result[0]["steps"]
-  var lenth = step.length;
-  lat = result[0]["steps"][0]["latitude"];
-  lng = result[0]["steps"][0]["longitude"];
-  var pl1 = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-  display(origin, destin);
-  display(origin, pl1);
+  for (i = 0; i < len; i ++ ) {
+    var lat = result[i]["origin_lat"];
+    var lng = result[i]["origin_lng"];
+    var origin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    lat = result[i]["destin_lat"];
+    lng = result[i]["destin_lng"];
+    var destin = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    var step = result[i]["steps"]
+    var lenth = step.length;
+    var tmploc;
+    for (j = 0; j < lenth; j ++) {
+      lat = result[i]["steps"][j]["latitude"];
+      lng = result[i]["steps"][j]["longitude"];
+      console.log("tmp" + (i*j).toString() + " is " + "(" + lat.toString() + "&&&" + lng.toString() + ")");
+      var tmp = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+      if(j == 0) {
+        display(origin, tmp);
+      }
+      else {
+        display(tmploc, tmp);
+      }
+      tmploc = tmp
+    }
+    display(tmploc, destin);
+    var pl1 = new google.maps.LatLng(parseFloat(43.4643), parseFloat(-80.5204));
+    var pl2 = new google.maps.LatLng(parseFloat(43.3452), parseFloat(-79.5324));
+    display(pl1, pl2);
+  }
+//  display(origin, pl1);
+//  display(pl1, pl2);
+//  display(pl1, des);
   var num = 1;
   list.innerHTML = list.innerHTML + 
     '<li><div><p>Route ' + num.toString() + '</p><button>Book</button></div></li>';
